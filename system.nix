@@ -71,6 +71,7 @@
         - ssh
       cloud_final_modules: []
     '';
+  };
 
   security.sudo.wheelNeedsPassword = false;
 
