@@ -1,7 +1,6 @@
 { lib, pkgs, ... }:
 
 {
-  networking.hostName = "nixos-bootstrap";
   networking.useNetworkd = true;
   networking.useDHCP = false;
   systemd.network = {
