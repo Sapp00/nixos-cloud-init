@@ -2,7 +2,7 @@
   description = "NixOS QCOW2 bootstrap image (cloud-init + kexec)";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     disko.url = "github:nix-community/disko";
     comin = {
       url = "github:nlewo/comin";
