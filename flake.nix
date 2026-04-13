@@ -16,6 +16,7 @@
         disko.nixosModules.disko
         ./disko.nix
         ./system.nix
+        ./comin.nix
       ];
     };
   };
