@@ -76,6 +76,12 @@
   systemd.services.cloud-init-local.serviceConfig.SuccessExitStatus = "0 1";
   systemd.services.cloud-final.serviceConfig.SuccessExitStatus = "0 1";
 
+# CRITICAL: Prevent nixos-rebuild switch from trying to restart cloud-init on a live system
+  systemd.services.cloud-config.restartIfChanged = false;
+  systemd.services.cloud-init.restartIfChanged = false;
+  systemd.services.cloud-init-local.restartIfChanged = false;
+  systemd.services.cloud-final.restartIfChanged = false;
+
   security.sudo.wheelNeedsPassword = false;
 
   environment.systemPackages = [
