@@ -27,7 +27,7 @@
       enable = true;
       efiSupport = true;
     };
-    initrd.availableKernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "9p" "9pnet_virtio" ];
+    initrd.availableKernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "9p" "9pnet_virtio" "sr_mod"];
   };
 
   # SSH
@@ -46,31 +46,34 @@
   services.cloud-init = {
     enable = true;
     network.enable = true;
-    config = ''
-      system_info:
-        distro: nixos
-        network:
-          renderers: [ 'networkd' ]
-        default_user:
-          name: admin
-      users:
-        - default
-      ssh_pwauth: false
-      chpasswd:
-        expire: false
-      cloud_init_modules:
-        - migrator
-        - seed_random
-        - growpart
-        - resizefs
-      cloud_config_modules:
-        - disk_setup
-        - mounts
-        - set-passwords
-        - ssh
-      cloud_final_modules: []
-    '';
+    settings = {
+      # Force it to look for Proxmox's drive
+      datasource_list = [ "ConfigDrive" "NoCloud" ];
+      # Only run the modules that actually work on NixOS
+      cloud_init_modules = [
+        "migrator"
+        "seed_random"
+        "bootcmd"
+        "set_hostname"
+        "update_hostname"
+        "update_etc_hosts"
+      ];
+      cloud_config_modules = [
+        "runcmd"
+        "ssh"
+      ];
+      cloud_final_modules = [
+        "scripts-vendor"
+        "scripts-user"
+      ];
+    };
   };
+
+  # Force the service to not block the boot/rebuild even if it exits with status 1
+  systemd.services.cloud-config.serviceConfig.PassEnvironment = "PATH";
+  systemd.services.cloud-config.serviceConfig.SuccessExitStatus = "0 1";
+  systemd.services.cloud-init.serviceConfig.SuccessExitStatus = "0 1";
+systemd.services.cloud-init-local.serviceConfig.SuccessExitStatus = "0 1";
 
   security.sudo.wheelNeedsPassword = false;
 

@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 
 {
   services.comin = {
@@ -6,7 +6,7 @@
     remotes = [{
       name = "origin";
       url = "git@github.com:Sapp00/nix-infra.git";
-      auth.access_token_path = "/etc/ssh/github_deploy_key"; # The baked-in key
+      auth.access_token_path = config.sops.secrets."github/access_token".path;
     }];
   };
 }
