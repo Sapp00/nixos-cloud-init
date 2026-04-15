@@ -73,7 +73,8 @@
   systemd.services.cloud-config.serviceConfig.PassEnvironment = "PATH";
   systemd.services.cloud-config.serviceConfig.SuccessExitStatus = "0 1";
   systemd.services.cloud-init.serviceConfig.SuccessExitStatus = "0 1";
-systemd.services.cloud-init-local.serviceConfig.SuccessExitStatus = "0 1";
+  systemd.services.cloud-init-local.serviceConfig.SuccessExitStatus = "0 1";
+  systemd.services.cloud-final.serviceConfig.SuccessExitStatus = "0 1";
 
   security.sudo.wheelNeedsPassword = false;
 
