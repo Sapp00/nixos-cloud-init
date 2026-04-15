@@ -18,7 +18,7 @@
     nixosConfigurations.bootstrap = nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
-        sops-nix.darwinModules.sops
+        sops-nix.nixosModules.sops
         comin.nixosModules.comin
         disko.nixosModules.disko
         ./modules/sops.nix
