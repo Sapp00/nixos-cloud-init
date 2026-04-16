@@ -16,7 +16,7 @@
   boot.kernelParams = [
     "console=tty0"
     "console=ttyS0,115200"
-    "ds=nocloud;s=/dev/sr0"
+    "ds=nocloud;s=/dev/sr1"
   ];
 
   systemd.services."serial-getty@ttys0".enable = true;
@@ -69,12 +69,12 @@
     };
   };
 
-  # Force the service to not block the boot/rebuild even if it exits with status 1
+  # Force the service to not block the boot/rebuild even if it exits with status 1 or 3
   systemd.services.cloud-config.serviceConfig.PassEnvironment = "PATH";
-  systemd.services.cloud-config.serviceConfig.SuccessExitStatus = "0 1";
-  systemd.services.cloud-init.serviceConfig.SuccessExitStatus = "0 1";
-  systemd.services.cloud-init-local.serviceConfig.SuccessExitStatus = "0 1";
-  systemd.services.cloud-final.serviceConfig.SuccessExitStatus = "0 1";
+  systemd.services.cloud-config.serviceConfig.SuccessExitStatus = "0 1 3";
+  systemd.services.cloud-init.serviceConfig.SuccessExitStatus = "0 1 3";
+  systemd.services.cloud-init-local.serviceConfig.SuccessExitStatus = "0 1 3";
+  systemd.services.cloud-final.serviceConfig.SuccessExitStatus = "0 1 3";
 
 # CRITICAL: Prevent nixos-rebuild switch from trying to restart cloud-init on a live system
   systemd.services.cloud-config.restartIfChanged = false;
@@ -86,6 +86,9 @@
 
   environment.systemPackages = [
     pkgs.cloud-init
+    pkgs.python3Packages.pyyaml
+    pkgs.python3Packages.jsonschema
+    pkgs.python3Packages.netifaces
   ];
 
   users.allowNoPasswordLogin = false;
