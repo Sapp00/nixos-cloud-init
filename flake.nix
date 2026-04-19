@@ -19,10 +19,10 @@
       inherit system;
       modules = [
         sops-nix.nixosModules.sops
-        comin.nixosModules.comin
+ #       comin.nixosModules.comin
         disko.nixosModules.disko
         ./modules/sops.nix
-        ./modules/comin.nix
+ #       ./modules/comin.nix
         ./disko.nix
         ./system.nix
       ];
