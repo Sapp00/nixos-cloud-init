@@ -94,6 +94,9 @@
   users.allowNoPasswordLogin = false;
   users.mutableUsers = true;
 
+
+  hardware.enableRedistributableFirmware = true;
+
   system.stateVersion = "25.11";
 
   users.users.admin = {
