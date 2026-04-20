@@ -104,4 +104,7 @@
     description = "Default user for access";
     extraGroups = [ "wheel" ];
   };
+
+  # allowing --build-on-remote using admin user
+  nix.settings.trusted-users = [ "root" "admin" ];
 }
